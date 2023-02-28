@@ -11,32 +11,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.pcar.Car;
-import com.example.demo.prepository.CarRepository;
+import com.example.demo.pservice.CarService;
 
 @RestController
 @RequestMapping("/car")
 public class CarController {
 	@Autowired
-	CarRepository repository;
+	CarService service;
 	@PostMapping("")
 	public boolean add(@RequestBody Car car) {
-		repository.save(car);
-		return true;
+		return service.addAll(car);
 	}
 	@GetMapping("/owners/{owners}")
 	public List<Car> getOwners(@PathVariable int owners) {
-		return repository.findByOwners(owners);
+		return service.getCarOwners(owners);
 	}
 	@GetMapping("/address/{address}")
 	public List<Car> getAddress(@PathVariable String address) {
-		return repository.findByAddress(address);
+		return service.getCarAddress(address);
 	}
 	@GetMapping("/carname/{carname}")
 	public List<Car> getCarName(@PathVariable String carname) {
-		return repository.findByCarName(carname);
+		return service.getCarCarName(carname);
 	}
 	@GetMapping("owners/{owners}/cartype/{cartype}")
-	public List<Car> getCarName(@PathVariable int owners,@PathVariable String cartype) {
-		return repository.findByOwnersAndCarType(owners,cartype);
+	public List<Car> getOwnersAndCarType(@PathVariable int owners,@PathVariable String cartype) {
+		return service.getCarOwnersAndCarType(owners,cartype);
 	}
 }
